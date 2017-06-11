@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import uuid from 'uuid';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import Navbar from '../../components/Navbar';
 import Credentials from '../../model/Credentials';
 import {addLog} from '../../ducks/Logs/actions';
@@ -94,7 +96,7 @@ class SelectLog extends Component {
           onLeftButtonPress={this.onBack.bind(this)}
           leftIconName='chevron-left'/>
 
-        <View style={{backgroundColor: '#fafafa', flex: 1}}>
+        <KeyboardAwareScrollView extraScrollHeight={100} style={{backgroundColor: '#fafafa', flex: 1}}>
           <Text style={styles.label}>LOG GROUP</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -149,7 +151,7 @@ class SelectLog extends Component {
           <TouchableOpacity style={styles.button} onPress={this.confirm.bind(this)}>
             <Text style={styles.buttonText}>SAVE</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
       </View>
     );
   }

@@ -7,7 +7,8 @@ import {
   Navigator,
   ScrollView,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import Navbar from '../../components/Navbar';
@@ -61,7 +62,14 @@ class SelectLog extends Component {
   }
 
   deleteLog(id) {
-    this.props.dispatch(removeLog(id));
+    Alert.alert(
+      'Delete Log Group?',
+      null,
+      [
+        {text: 'Yes, Delete', onPress: () => this.props.dispatch(removeLog(id)), style: 'destructive'},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'}
+      ]
+    );
   }
 
   render() {
