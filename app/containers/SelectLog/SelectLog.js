@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 import Settings from '../Settings';
 import AddLog from '../AddLog';
 import ShowLog from '../ShowLog';
+import UpdateLog from '../UpdateLog';
 import {removeLog} from '../../ducks/Logs/actions';
 
 var styles = StyleSheet.create({
@@ -72,6 +73,15 @@ class SelectLog extends Component {
     );
   }
 
+  updateLog(log) {
+    this.props.navigator.push({
+      component: UpdateLog,
+      title: 'Update Log',
+      navigationBarHidden: true,
+      passToProps: {log}
+    });
+  }
+
   render() {
     var renderLogs = () => {
       return this.props.logs.map(log => {
@@ -82,9 +92,14 @@ class SelectLog extends Component {
                 <Text style={{fontSize: 20}}>{log.log}</Text>
                 <Text style={{color: '#888'}}>{log.stream}</Text>
               </View>
-              <TouchableOpacity onPress={() => this.deleteLog(log.id)}>
-                <Icon name='x' size={15} color='#333' style={{marginLeft: 15, padding: 8}}/>
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity onPress={() => this.deleteLog(log.id)}>
+                  <Icon name='x' size={15} color='#333' style={{marginLeft: 15, padding: 8}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.updateLog(log)}>
+                  <Icon name='pencil' size={15} color='#333' style={{marginLeft: 15, padding: 8}}/>
+                </TouchableOpacity>
+              </View>
             </View>
           </TouchableOpacity>
         );

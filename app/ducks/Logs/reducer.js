@@ -7,8 +7,14 @@ module.exports = (state = [], action) => {
         ...state,
       ];
 
+    case 'UPDATE_LOG':
+      return state.map(log => {
+        if (log.id === action.log.id) return action.log;
+        return log;
+      });
+
     case 'REMOVE_LOG':
-      return state.filter((log) => (log.id !== action.id ));
+      return state.filter(log => (log.id !== action.id ));
 
     default:
       return state;

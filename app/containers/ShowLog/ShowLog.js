@@ -1,3 +1,5 @@
+/* eslint no-empty : 0 */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -20,6 +22,10 @@ import SelectFilter from '../SelectFilter';
 import {addAlert} from '../../ducks/Alerts/actions';
 import {LogStream} from '../../model/CloudWatch';
 
+
+// Sorry about these random functions. They're just for
+// parsing JSON in log messages and automatically indenting it.
+// TODO: Move these into a helper class
 
 String.prototype.multisplit = function(indexes){
   var str = this,

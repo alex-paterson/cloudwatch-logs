@@ -1,3 +1,5 @@
+/* eslint no-empty : 0 */
+
 import AWSSignature from 'react-native-aws-signature';
 import axios from 'axios';
 
@@ -35,7 +37,7 @@ export class LogStream {
     var headers = {
       Host: host,
       'X-Amz-Date': date,
-      'region': 'ap-southeast-2',
+      'region': this.region,
       'Content-Length': body.length,
       Accept: 'application/json',
       'Content-Type': 'application/x-amz-json-1.1',
@@ -80,9 +82,7 @@ export class LogStream {
       filterPattern: this.filter,
       startFromHead: false
     }, (err, response) => {
-      try {
-        if (err) return callback(new Error(err.response.data.message));
-      } catch (err) {}
+      try { if (err) return callback(new Error(err.response.data.message)); } catch (err) {}
 
       if (err) return callback(err);
       this.nextBackwardToken = response.data.nextBackwardToken;

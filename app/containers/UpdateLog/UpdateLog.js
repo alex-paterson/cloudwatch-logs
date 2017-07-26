@@ -8,13 +8,11 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import uuid from 'uuid';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Navbar from '../../components/Navbar';
-import Credentials from '../../model/Credentials';
-import {addLog} from '../../ducks/Logs/actions';
+import {updateLog} from '../../ducks/Logs/actions';
 
 var styles = StyleSheet.create({
   label: {
@@ -52,15 +50,14 @@ var styles = StyleSheet.create({
   }
 });
 
-class SelectLog extends Component {
+class UpdateLog extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      applicationLog: undefined,
-      applicationStream: undefined,
-      region: undefined,
-      accessKeyID: undefined,
-      secretAccessKey: undefined
+      applicationLog: props.log.log,
+      applicationStream: props.log.stream,
+      region: props.log.region
     };
   }
 
@@ -69,18 +66,14 @@ class SelectLog extends Component {
   }
 
   confirm() {
-    var {dispatch, navigator} = this.props;
-    var {applicationLog, applicationStream, region, accessKeyID, secretAccessKey} = this.state;
-    if (applicationLog && applicationStream && region && accessKeyID && secretAccessKey) {
-      var id = uuid.v4();
-
-      Credentials.setCredentialsForID(id, accessKeyID, secretAccessKey);
-
-      dispatch(addLog({
+    var {dispatch, navigator, log} = this.props;
+    var {applicationLog, applicationStream, region} = this.state;
+    if (applicationLog && applicationStream && region) {
+      dispatch(updateLog({
+        id: log.id,
         log: applicationLog,
         stream: applicationStream,
         region: region,
-        id: id
       }));
       navigator.pop();
     }
@@ -102,9 +95,9 @@ class SelectLog extends Component {
             <TextInput
               placeholder='My-Application-Log'
               style={styles.input}
-              autoCorrect={false}
               onChangeText={(applicationLog) => this.setState({applicationLog})}
               autoCapitalize='none'
+              autoCorrect={false}
               value={this.state.applicationLog}/>
           </View>
 
@@ -130,29 +123,6 @@ class SelectLog extends Component {
               value={this.state.region}/>
           </View>
 
-
-          <Text style={styles.label}>ACCESS KEY ID</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder='XXXXX6L62MA3O4PXXXXX'
-              style={styles.input}
-              onChangeText={(accessKeyID) => this.setState({accessKeyID})}
-              autoCapitalize='none'
-              autoCorrect={false}
-              value={this.state.accessKeyID}/>
-          </View>
-
-          <Text style={styles.label}>SECRET ACCESS KEY</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder='XXXXXaASzasdTZf12xaAasdd9NQu6Nq4zZiXXXXX'
-              style={styles.input}
-              onChangeText={(secretAccessKey) => this.setState({secretAccessKey})}
-              autoCapitalize='none'
-              autoCorrect={false}
-              value={this.state.secretAccessKey}/>
-          </View>
-
           <TouchableOpacity style={styles.button} onPress={this.confirm.bind(this)}>
             <Text style={styles.buttonText}>SAVE</Text>
           </TouchableOpacity>
@@ -162,4 +132,4 @@ class SelectLog extends Component {
   }
 }
 
-export default connect()(SelectLog);
+export default connect()(UpdateLog);
