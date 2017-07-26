@@ -84,7 +84,7 @@ class UpdateLog extends Component {
       <View style={{backgroundColor: 'white', flex: 1}}>
         <StatusBar barStyle='light-content'/>
         <Navbar
-          title='Add Log'
+          title='Update Log'
           rightButtonHidden={true}
           onLeftButtonPress={this.onBack.bind(this)}
           leftIconName='chevron-left'/>
