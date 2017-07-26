@@ -5,8 +5,6 @@ at this point.
 
 `cmd + <` in Xcode to set build configuration to debug.
 
-`react-native run-ios` to run.
-
 In `AppDelegate.m` uncomment this line:
 
 ```
@@ -18,6 +16,8 @@ In `AppDelegate.m` comment this line:
 ```
 jsCodeLocation = [[NSBundle mainBundle] URLForResource: @"main" withExtension: @"jsbundle"];
 ```
+
+`react-native run-ios` to run.
 
 # Archiving
 
