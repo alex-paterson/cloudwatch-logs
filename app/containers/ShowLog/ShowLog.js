@@ -233,7 +233,11 @@ class ShowLog extends Component {
       this.logStream.getFirstLogs((err, logs) => {
         if (err) {
           navigator.pop();
-          dispatch(addAlert(err.message, 'danger'));
+          if (err.message) {
+            dispatch(addAlert(err.message, 'danger'));
+          } else {
+            dispatch(addAlert('Unknown error.', 'danger'));
+          }
           return;
         }
         this.setLogs(logs);

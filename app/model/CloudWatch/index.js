@@ -62,7 +62,19 @@ export class LogStream {
     axios.post(`https://${host}/`, body, {headers: headersWithAuth}).then(response => {
       callback(null, response);
     }).catch(err => {
-      callback(err);
+      if (err) {
+        if (err.response) {
+          if (err.response.data) {
+            if (err.response.data.message) {
+              return callback(new Error(err.response.data.message));
+            }
+          }
+          if (err.response.status) {
+            return callback(new Error(`Unknown API error (${err.response.status}).`));
+          }
+        }
+        return callback(new Error('Unknown API error (Unknown status code)'));
+      }
     });
 
   }
@@ -82,9 +94,8 @@ export class LogStream {
       filterPattern: this.filter,
       startFromHead: false
     }, (err, response) => {
-      try { if (err) return callback(new Error(err.response.data.message)); } catch (err) {}
-
       if (err) return callback(err);
+
       this.nextBackwardToken = response.data.nextBackwardToken;
       this.nextForwardToken = response.data.nextForwardToken;
       this.handleResponse(response, callback);
